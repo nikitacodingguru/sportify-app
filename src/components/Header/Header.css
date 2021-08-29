@@ -1,0 +1,9 @@
+.header {
+    background-color: lightsalmon;
+}
+.header__title {
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    font-size: 30px;
+    margin-left: 30px;
+}

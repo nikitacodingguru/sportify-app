@@ -1,0 +1,9 @@
+.court-adress {
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    width: 350px;
+    border-radius: 4px;
+    border: 1px solid black;
+    margin-bottom: 2px;
+}
