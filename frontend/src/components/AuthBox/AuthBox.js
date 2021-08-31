@@ -4,7 +4,49 @@ import './AuthBox.css';
 
 class AuthBox extends Component {
     
-    state = {}
+    state = {
+        users: [],
+        loginOfNewUser: '',
+        emailOfNewUser: '',
+        passwordOfNewUser: ''
+    }
+
+    createUser = (e) => {
+        e.preventDefault()
+        fetch('http://localhost:3003/registration', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                login: this.state.loginOfNewUser,
+                password: this.state.passwordOfNewUser,
+            })
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            localStorage.setItem('token', data.token)
+        })
+    }
+
+    changeLogin = (l) => {
+        this.setState({
+            loginOfNewUser: l.target.value
+        })
+    }
+    changeEmail = (e) => {
+        this.setState({
+            emailOfNewUser: e.target.value
+        })
+    }
+    changePassword = (p) => {
+        this.setState({
+            passwordOfNewUser: p.target.value
+        })
+    }
+
+
+
 
     render() {
         return(
@@ -29,20 +71,17 @@ class AuthBox extends Component {
                     >Sign in
                     </button>
                 </form><br></br>
-                <form className="auth-box-form">
+                <form className="auth-box-form" onSubmit={this.createUser}>
                     <label className="auth-box-form-label">
                         Зарегистрироваться:<br></br>
                         <input
+                            value={this.state.loginOfNewUser} onChange={this.changeLogin}
                             type='text'
                             className="auth-box-input"
                             placeholder="username"
                         /><br></br>
                         <input
-                            type='text'
-                            className="auth-box-input"
-                            placeholder="email"
-                        /><br></br>
-                        <input
+                            value={this.state.passwordOfNewUser} onChange={this.changePassword}
                             type='text'
                             className="auth-box-input"
                             placeholder="password"

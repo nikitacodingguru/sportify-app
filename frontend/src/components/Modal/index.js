@@ -14,9 +14,9 @@ class Modal extends Component {
                 <div className="modalBody">
                     <div className="modalTitle">Укажите данные для события по адресу <strong>{this.props.address}</strong></div>
                     <form onSubmit={this.handleSumbit}>
-                        <input className="date"></input>
-                        <input></input>
-                        <button type="submit"> Создать</button>
+                        <input className="date-event"></input>
+                        <input className="time-event"></input>
+                        <button type="submit">Создать</button>
                     </form>
                 </div>
             </div>
