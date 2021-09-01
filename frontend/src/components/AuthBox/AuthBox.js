@@ -93,7 +93,7 @@ class AuthBox extends Component {
                     >Sign up
                     </button>
                 </form>
-                <Link to={`/districts`}>Посмотреть площадки</Link>
+                <Link to={`/choice`}>Посмотреть площадки</Link>
             </div>
             
         );

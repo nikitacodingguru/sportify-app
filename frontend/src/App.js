@@ -2,8 +2,9 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import StartPage from './pages/StartPage/StartPage';
 import Districts from './pages/Districts';
-import DistrictCourt from './pages/DistrictCourt'
-import { SAOAddresses, SVAOAddresses, SZAOAddresses } from './consts'
+import DistrictCourt from './pages/DistrictCourt';
+import Choice from './pages/Choice';
+import ListOfEvents from './pages/ListOfEvents'
 
 class App extends React.Component {
   
@@ -15,6 +16,8 @@ class App extends React.Component {
         <Route path="/" exact component={StartPage} />
         <Route path="/districts/" exact component={Districts} />
         <Route path='/districts/*' exact component={DistrictCourt} />
+        <Route path='/choice' exact component={Choice} />
+        <Route path='/listofevents' exact component={ListOfEvents} />
       </div>
     );
   }

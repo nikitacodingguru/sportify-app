@@ -14,6 +14,10 @@ class DistrictCourt extends Component {
         currentDistrictCourt: [], // {} Object.keys().map()
         isOpen: false,
         currentAddress: '',
+        time: '',
+        date: '',
+        events: '',
+        amountOfPlayers: 1
     }
 
     handleOpen = (address) => {
@@ -24,17 +28,48 @@ class DistrictCourt extends Component {
         this.setState({ isOpen: false })
     }
 
-    handleSumbit = (e) => {
-        console.log(e);
-        e.preventDefault();
+    changeDate = (d) => {
+        this.setState({
+            date: d.target.value
+        })
+    }
+    changeTime = (t) => {
+        this.setState({
+            time: t.target.value
+        })
     }
 
-    createEvent = () => {
+
+
+handleSubmit = () => {
+        
+            fetch('http://localhost:3003/events', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: localStorage.getItem('token'),
+                },
+                body: JSON.stringify({
+                    address: this.state.currentAddress,
+                    date: this.state.date,
+                    time: this.state.time,
+                    amountOfPlayers: this.state.amountOfPlayers
+                })
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data)
+                this.setState({ events: data})
+                this.handleClose()
+            })
+}
+
+createEvent = () => {
         // localStorage.getItem('token')
-    }
+}
 
-    componentDidMount() {
-        const { pathname } = this.props.location;
+componentDidMount() {
+    const { pathname } = this.props.location;
         
         // TODO: тянуть данные с API и setState задавать данными полученными отсюда
         // { data: [ 
@@ -95,9 +130,9 @@ class DistrictCourt extends Component {
                     </div>
                     )
                 // })} */}
-                {this.state.currentDistrictCourt.map((ad) => {
+                {this.state.currentDistrictCourt.map((ad, idx) => {
                     return(
-                    <div className="court-adress">
+                    <div className="court-adress" key={idx}>
                         <div className="ad">{ad}</div>  
                         {/* <CreateAnEvent /> */}
                         <button onClick={() => this.handleOpen(ad)}>create event</button>
@@ -112,11 +147,9 @@ class DistrictCourt extends Component {
                             onClose={this.handleClose}>
                             <a style={closeStyle} onClick={this.handleClose}>X</a>
                             <div className="modalTitle">Укажите данные для события по адресу <br/><strong>{this.state.currentAddress}</strong></div>
-                                <form onSubmit={this.handleSumbit}>
-                                    <input type="date" className="date-event"></input><br/>
-                                    <input type="time" className="time-event"></input><br/>
-                                    <button type="submit">Создать</button>
-                                </form>
+                                    <input value={this.state.date} onChange={this.changeDate} type="date" className="date-event"></input><br/>
+                                    <input value={this.state.time} onChange={this.changeTime} type="time" className="time-event"></input><br/>
+                                    <button onClick={this.handleSubmit}>Создать</button>
 
                         </Modal>
             </>

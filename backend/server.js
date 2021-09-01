@@ -107,6 +107,20 @@ app.post('/events', authMiddleware, (req, res) => {
     res.json(eventData)
 });
 
+app.get('/events', authMiddleware, (req, res) => {
+    return res.json(EVENTS)
+})
+
+app.put('/events/:id', authMiddleware, (req, res) => {
+    const id = Number(req.params.id);
+    const event = EVENTS.find(e => e.id === id)
+    if (!event) {
+        return res.status(404).send()
+    }
+
+    event.amountOfPlayers += 1;
+    return res.json(event)
+})
 app.listen(3003, () => {
     console.log("🚀 Server is running on port 3003");
 });
